@@ -1,0 +1,67 @@
+<%- include('../partials/admin-header') %>
+
+
+<section>
+
+    <div class="container mt-4">
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+                <h1>Edit Product</h1>
+                <form action="/product/edit-product/<%= product._id %>" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label for="name">Product name</label>
+                        <input type="name" class="form-control" id="name" name="name" value="<%= product.name %>" required>
+                    </div>
+                    <label for="category">Category</label>
+                    <select name="category" class="form-control">
+                        <% category.forEach(item => { %>
+                            <option value="<%= item._id %>"><%= item.name %></option>
+                        <% }) %>
+                    </select>
+                    
+                    <div class="form-group">
+                        <label for="Price">Price</label>
+                        <input type="text" class="form-control" id="number" name="price" value="<%= product.price %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required><%= product.description %></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Stock</label>
+                        <input type="text" class="form-control" id="quanitity" name="stock" value="<%= product.stock %>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="existingImages" class="form-label">Existing Images</label>
+                        <% product.productImages.forEach(image=> { %>
+                            <div>
+                                <input type="checkbox" name="removeImage_<%= image %>"
+                                    id="removeImage_<%= image %>">
+                                    <label for="removeImage_<%= image %>">Remove</label>
+                                    <img src="/images/product/<%= image %>" alt="Product Image" width="50"
+                                        height="50">
+                                </div>
+                                <% }); %>
+                        </div>
+
+
+                    <div class="mb-3">
+                        <label for="newImages" class="form-label">Choose New Image</label>
+                        <input type="file" class="form-control" id="newImages" name="newImages" multiple accept="image/*">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+
+                    
+                </form>
+            </div>
+
+          </div>  
+        </div>
+    </div>
+</section>

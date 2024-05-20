@@ -1,0 +1,125 @@
+<%- include('../partials/admin-header') %>
+
+<h1>Coupons</h1>
+
+<div class="coupon-container">
+    <% if (formattedCoupens.length === 0) { %>
+        <p class="message">No coupons available.</p>
+    <% } else { %>
+        <!-- Display coupons -->
+        <% formattedCoupens.forEach(coupon => { %>
+            <div class="coupon-card">
+                <h2>Coupon Code: <%= coupon.coupon_code %></h2>
+                <p><strong>Discount:</strong> <%= coupon.discount %>%</p>
+                <p><strong>Start Date:</strong> <%= coupon.start_date %></p>
+                <p><strong>Expiry Date:</strong> <%= coupon.exp_date %></p>
+                <p><strong>Minimum Amount:</strong> <%= coupon.min_amount %></p>
+                <p><strong>Maximum Usage Count:</strong> <%= coupon.max_count %></p>
+                <p><strong>Used Count:</strong> <%= coupon.used_count %></p>
+                <p><strong>Description:</strong> <%= coupon.discription %></p>
+                <div class="button-container">
+                    <button class="edit-button" onclick="editCoupon('<%= coupon._id %>')">Edit</button>
+                    <button class="delete-button" onclick="deleteCoupen('<%= coupon._id %>')">Delete</button>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+</div>
+</body>
+</html>
+
+<style>
+    /* CSS styles for coupon container */
+    .coupon-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    /* CSS styles for coupon cards */
+    .coupon-card {
+        width: calc(33.33% - 20px);
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .coupon-card h2 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .coupon-card p {
+        margin: 5px 0;
+        font-size: 1rem;
+        color: #666;
+    }
+
+    /* CSS styles for buttons */
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .edit-button, .delete-button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .delete-button {
+        background-color: #eb4747;
+    }
+</style>
+
+ <!-- Include SweetAlert library -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ <!-- JavaScript function to handle coupon deletion -->
+ <script>
+     function editCoupon(couponId) {
+        window.location.href = `/coupen/edit_coupen/${couponId}`;
+    }
+
+
+     const deleteCoupen = (id) => {
+         Swal.fire({
+             title: "Are you sure?",
+             text: "Are you sure you want to delete this coupon?",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonColor: "#0061bc",
+             cancelButtonColor: "rgb(128, 128, 128)",
+             confirmButtonText: "Yes",
+         }).then(async (result) => {
+             if (result.isConfirmed) {
+                 await fetch(`/coupen/delete-coupen/${id}`, {
+                     method: 'GET'
+                 }).then(response => response.json())
+                     .then(data => {
+                         if (data.success) {
+                             Swal.fire(
+                                 'Deleted!',
+                                 'The coupon has been deleted successfully.',
+                                 'success'
+                             ).then(() => {
+                                 location.assign('/coupen');
+                             })
+                         }
+                     })
+     
+             }
+         });
+     }
+ </script>
+</html>

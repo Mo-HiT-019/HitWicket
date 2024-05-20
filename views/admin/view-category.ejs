@@ -1,0 +1,43 @@
+<%- include('../partials/admin-header') %>
+
+<section>
+
+
+<div class="container">
+    <div class="row mt-4">
+      <a href="/admin/add-category" class="btn btn-success ml-auto">Add Category</a>
+
+      <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% categories.forEach((category, index) => { %>
+                <tr>
+                    <th scope="row"><%= index + 1 %></th>
+                    <td><%= category.name %></td>
+                    <td>
+                        <a href="/category/edit-category/<%= category._id %>" class="btn btn-primary">Edit</a>
+                        <a href="/category/delete-category/<%= category._id %>" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    </div>
+
+    <% if (msg && msg.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+          <%= msg[0] %>
+        </div>
+      <% } %>
+   
+
+
+
+</div>
+</section>

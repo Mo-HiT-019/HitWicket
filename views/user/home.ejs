@@ -1,0 +1,137 @@
+
+
+<%- include('../partials/user-header') %>
+
+
+
+
+<main>
+  <style>
+    .category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically */
+}
+
+.category-button {
+    background-color: #4CAF50; /* Green background color */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.category-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+  </style>
+    <div class="container">
+      <!-- Navbar -->
+    
+      <section class="categories">
+        <div class="container">
+            <h3 style="text-align: center;">Choose by Category</h3>
+            <div class="category-buttons">
+                <% categories.forEach(category => { %>
+                  <button class="category-button" >
+                    <a href="/product/category-product?category=<%= category._id %>" style="color: black;""><%= category.name %></a>
+                  </button>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+  <section>
+    <!-- Your existing HTML content -->
+    <h2>All Products</h2>
+    <div class="text-center">
+      <div class="row">
+        <% for (let i = 0; i < products.length; i++) { %>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="/user/product-detail/<%= products[i]._id %>" class="text-reset">
+                <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+                  <img src="/images/product/<%= products[i].productImages[0] %>" class="product-image" style="width: 250px; height: 200px;" />
+                  <style>
+                    .product-image {
+    width: 100px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height */
+    object-fit:contain; /* Maintain aspect ratio and cover container */
+    margin: 5px; /* Adjust margin as needed */
+  }
+  
+                  </style>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title mb-2"><%= products[i].name %></h5>
+                  <p><%= products[i].category && products[i].category.name %></p>
+                  <h6 class="mb-2">Original Price: ₹<%= products[i].price.toFixed(2) %></h6>
+                  <% if (products[i].offers.discountedPrice) { %>
+                    <h6 class="mb-2 text-danger">
+                      Discounted Price: ₹<%=products[i].offers.discountedPrice.toFixed(2) %>
+                    </h6>
+                  <% } %>
+                  
+                </div>
+              </a>
+            </div>
+          </div>
+        <% } %>
+        
+      </div>
+    </div>
+    </section>
+  </form>
+    
+  </script>
+    
+    
+  
+  </section>
+  
+      
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+      <ul class="pagination">
+        <% if (currentPage > 1) { %>
+          <li class="page-item">
+            <a class="page-link" href="?page=<%= currentPage - 1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        <% } else { %>
+          <li class="page-item disabled">
+            <span class="page-link" aria-hidden="true">&laquo;</span>
+          </li>
+        <% } %>
+    
+        <% for (let i = 1; i <= totalPages; i++) { %>
+          <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+          </li>
+        <% } %>
+    
+        <% if (currentPage < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link" href="?page=<%= currentPage + 1 %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        <% } else { %>
+          <li class="page-item disabled">
+            <span class="page-link" aria-hidden="true">&raquo;</span>
+          </li>
+        <% } %>
+      </ul>
+    </nav>
+    
+    <!-- Pagination -->  
+    </div>
+    </main>

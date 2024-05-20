@@ -1,0 +1,101 @@
+<%- include('../partials/admin-header') %>
+
+<section>
+
+    <div class="container">
+        <h1>All Users</h1>
+        
+       <!-- Search form -->
+<form action="/admin/search" method="GET" class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search users" aria-label="Search users" aria-describedby="basic-addon2" name="query">
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i> Search</button>
+    </div>
+</form>
+
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile No.</th>
+                    <!--<th scope="col">Actions</th>-->
+                    <th scope="col">Block/Unblock</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%=user.number%></td>
+                    <!--<td>
+                        <a href="/editUser/<%= user._id %>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i> Edit</a>
+                        <a href="/user/adm/delete/<%= user._id %>" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</a>
+                        
+                    </td> -->
+                    <td>
+                        <% if (user.blocked) { %>
+                          <!-- User is blocked -->
+                          <a href="/admin/unblock/<%= user._id %>" class="btn btn-sm btn-warning">Unblock user</a>
+                        <% } else { %>
+                          <!-- User is not blocked -->
+                          <a href="/admin/block/<%= user._id %>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to block this user?')">Block User</a>
+                        <% } %>
+                      </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        
+     <!-- Pagination -->
+<div>
+    <ul class="pagination">
+      <% const totalPages = Math.ceil(totalCount / PAGE_SIZE); %>
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item <%= i === page ? 'active' : '' %>">
+          <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+
+   
+
+</section>
+
+
+<style>
+    
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 2px;
+}
+
+.page-link {
+  display: block;
+  padding: 5px 10px;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+.page-link:hover {
+  background-color: #f5f5f5;
+}
+
+.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+</style>

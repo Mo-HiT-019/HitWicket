@@ -1,0 +1,198 @@
+
+<%- include('../partials/user-header.ejs') %>
+
+
+
+
+  <div class="container">
+    <div class="main-body"style="margin-top:6%">
+    
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    
+                    <style>
+        /* Basic button styles */
+        button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect */
+        button:hover {
+            background-color: #45a049; /* Darker green */
+        }
+
+        /* Animation effect */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Apply animation to the button */
+        button {
+            animation: fadeIn 0.5s ease;
+        }
+        .main-body{
+          margin-top: 20%;
+        }
+    </style>
+                    
+                    <div class="mt-3">
+                      <h4><%=user.name%></h4>
+                      <p class="text-secondary mb-1"><%=user.email%></p>
+                     
+                      <p class="text-muted font-size-sm"><%=user.address%></p>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                   <a href="/cart/cart"style="text-decoration:null"><h6 class="fa-solid fa-cart-shopping ml-2"></h6>My Cart</h6></a> 
+                 
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                     <a href="/order"style="text-decoration:null"><h6 class="fa-solid fa-shop"></i></h6>My Orders</h6></a> 
+                
+                  </li>
+                  
+                  
+                 
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <%= user.name%>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <%=user.email%>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <%=user.number%>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Password</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <%= '*'.repeat(user.password.length) %>
+                    </div>
+                  </div>
+                  <hr>
+                  
+                  
+                  <hr>
+                  <div class="row">
+                    
+                    <div class="col-sm-9 text-secondary">
+                      
+                     
+                      <h3 class="h4 user-text fw-bold mb-3">Manage Addresses</h3>
+                      <input id="addAddress" class="btn user-btn" type="button" style="background-color: #4CAF50; color: white;" value="View Address">
+                    </div>
+                  
+                  <script>
+                    $(document).ready(function () {
+                        console.log("jQuery code is running");
+                        $("#addAddress").click(function () {
+                            console.log("Button clicked");
+                            $(".address-container").toggle();
+                        });
+                    });
+                </script>
+                
+    <% addresses.forEach(address => { %>
+      <div id="hai" class="row card pt-3 mt-2 col-md-8 address-container" style="display:none;">
+          <div class="headercont d-flex justify-content-between">
+              <div style="width: 5rem;" class="btn btn-sm btn-light">
+                  <%= address.address_type %>
+              </div>
+              <div class="d-flex">
+                  <a style="text-decoration: none;" href="/my-address/edit-address/<%= address._id %>"
+                      class="edit ms-3 text-primary">Edit</a>
+                  <a style="text-decoration: none; cursor:pointer" onclick="delete_Adrs_Alert('<%= address._id %>')"
+                      class="edit ms-3 text-danger">Delete</a>
+              </div>
+          </div>
+          <p class="h5"><%= address.address_cust_name %> &emsp; <%= address.phone %></p>
+          <p class="text-normal">
+              <%= address.house_name %>(H),
+              <%= address.locality %>,
+              <%= address.area_street %>,
+              <%= address.landmark %>,
+              <%= address.state %>
+              <span class="fw-bold">
+                  -<%= address.pincode %>
+              </span>
+          </p>
+      </div>
+  <% }); %>
+                  
+                  </div>
+        
+       
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a href="/my-address" style="background-color: #4CAF50; color: white; padding: 10px; text-decoration: none; display: inline-block;border-radius: 10%;">Add Address</a>
+
+                        <a href="/user-profile-edit/<%= user._id %>" class="btn btn-primary">Edit Profile</a>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              
+                
+              </div>
+
+
+
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+    </body>
+    </html>
+
+    

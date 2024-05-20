@@ -1,0 +1,70 @@
+<%- include('../partials/admin-header') %>
+
+<!-- admin/orderDetails.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        .order-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Details</h1>
+    
+    <!-- Display error message if any -->
+    <% if (error) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+    <% } %>
+
+    <!-- Display success message if any -->
+    <% if (success) { %>
+    <div class="alert alert-success" role="alert">
+        <%= success %>
+    </div>
+    <% } %>
+
+    <!-- Display order details -->
+    <% orderDetails.forEach(order => { %>
+    <div class="order-box">
+        <h2>Order ID: <%= order._id %></h2>
+        <p><strong>Customer Name:</strong> <%= order.userName.name %></p>
+        <p><strong>Product Name:</strong> <%= order.products.name %></p>
+        <p><strong>Address:</strong> <%= order.address %></p>
+        <p><strong>Payment Method:</strong> <%= order.payment_method %></p>
+        <p><strong>Status:</strong> <%= order.status %></p>
+        <p><strong>Created At:</strong> <%= order.createdAt %></p>
+
+
+        <!-- Edit Order Status button -->
+        <form action="/admin/edit-orderstatus" method="GET">
+            <input type="hidden" name="orderId" value="<%= order._id %>">
+            <button type="submit">Edit</button>
+        </form>
+    </div>
+
+    
+    <% }) %>
+
+    <!-- Pagination -->
+    <div>
+        <% if (currentPage > 1) { %>
+        <a href="?page=<%= currentPage - 1 %>">Previous</a>
+        <% } %>
+        
+        <% if (currentPage < totalPages) { %>
+        <a href="?page=<%= currentPage + 1 %>">Next</a>
+        <% } %>
+    </div>
+</body>
+</html>
+

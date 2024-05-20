@@ -1,0 +1,124 @@
+<%- include('../partials/admin-header') %>
+
+<title>User Order Details</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .fw-bold {
+        font-weight: bold;
+    }
+
+    .text-danger {
+        color: #d9534f;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #fff;
+        background-color: #5bc0de;
+        border-color: #46b8da;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #31b0d5;
+        border-color: #269abc;
+    }
+</style>
+</head>
+<body>
+    <h1>User Order Details</h1>
+
+    <table id="example">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Customer Name</th>
+                <th>Order Date</th>
+                <th>Address</th>
+                <th>Quantity/Price</th>
+                <th>Status</th>
+                <th>Invoice</th>
+                <th>Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orderDetails.forEach((order, index) => { %>
+                <tr>
+                    <td><%= (currentPage - 1) * PAGE_SIZE + index + 1 %></td>
+                    <td><%= order.products.name %></td>
+                    <td><%= order.userName.name %></td>
+                    <td><%= order.createdAt %></td>
+                    <td>
+                        <span class="fw-bold"><%= order.address.address_user_name %></span>,
+                        <%= order.address.house_name %>(H),
+                        <%= order.address.area_street %>,
+                        <%= order.address.town %>,
+                        <%= order.address.pincode %>,
+                        PH: <%= order.address.phone %>
+                    </td>
+                    <td>(<%= order.items.quantity %>), <%= order.items.price %></td>
+                    <td <%= order.items.cancelled_on ? 'class="text-danger fw-bold"' : '' %>><%= order.items.status %></td>
+                    <td><a href="/admin/view-invoice?productId=<%= order.items.product_id %>&orderId=<%= order._id %>">view</a></td>
+                    <td>
+                        <% if (order.items.delivered) { %>
+                            <p>delivered</p>
+                        <% } %>
+                        <% if (order.items.cancelled) { %>
+                            <p>Cancelled</p>
+                        <% } %>
+                        <% if (order.items) { %>
+                            <a class="btn" href="/admin/manage-order?productId=<%= order.items.product_id %>&orderId=<%= order._id %>">manage</a>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    
+</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+
+
+<%- include('../partials/admin-header') %>
+
+<% if (msg.length > 0) { %>
+  <% console.log(msg) %>
+  <div class="alert alert-danger" id="errorMessage">
+    <%= msg %>
+  </div>
+  <% } %>
+
+<section>
+<div class="container">
+    <div class="row mt-4">
+      <a href="/product/add-product" class="btn btn-success ml-auto">Add product</a>
+    </div>
+    <table class="table table-bordered table-responsive mt-4">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Category</th>
+          <th scope="col">Price</th>
+          <th scope="col">Description</th>
+          <th scope="col">Stocks</th>
+          <th scope="col">Image</th>
+          <th scope="col">Offers</th>
+          <th scope="col" colspan="2" class="ml-5">Actions</th>
+
+        </tr>
+      </thead>
+      <tbody>
+      <% for (let i = 0; i < products.length; i++) { %>
+        <% console.log('Category:', products[i].category); %>
+        <tr>
+          <th scope="row"><%= i + 1 %></th>
+          <td><%= products[i].name %></td>
+          <td><%= products[i].category ? products[i].category.name : 'N/A' %></td>
+          <td><%= products[i].price %></td>
+          <td><%= products[i].description %></td>
+          <td><%=products[i].stock%></td>
+          <td>
+            <!-- Single <td> for all images -->
+            <div style="display: flex; flex-wrap: wrap;">
+              <% for (let j = 0; j < products[i].productImages.length; j++) { %>
+                <img src="/images/product/<%= products[i].productImages[j] %>" alt="Product Image" style="max-width: 50px; max-height: 50px; margin-right: 5px;">
+              <% } %>
+            </div>
+          </td>
+          <td>
+            <% if (products[i].offers && products[i].offers.length > 0) { %>
+              <!-- Display the first offer (you can modify this based on your requirements) -->
+              <span><%= products[i].offers[0].discount %> % off</span><br>
+              <small>Valid until <%= products[i].offers[0].endDate %></small>
+            <% } else { %>
+              <span>No offers available</span>
+            <% } %>
+          </td>
+          <td class="fsd"style="display:flex">
+            <a href="/product/edit-product/<%= products[i]._id %>" class="btn btn-primary">
+                <i class="fas fa-edit">Edit</i> <!-- Edit Icon -->
+            </a>
+            <a href="/product/delete-product/<%= products[i]._id %>" class="btn btn-danger" onclick="return confirmDelete();">
+                <i class="fas fa-trash">Delete</i> <!-- Delete Icon -->
+            </a>
+        </td>
+        
+        </tr>
+      <% } %>
+
+      <!-- Add pagination links after the table -->
+<!-- Add pagination links after the table -->
+<div class="container mt-0">
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= i === page ? 'active' : '' %>">
+        <a class="page-link" href="/products/view-products?page=<%= i %>"><%= i %></a>
+      </li>
+    <% } %>
+  </ul>
+</nav>
+</div>
+
+
+
+    </tbody>
+    
+    <script>
+    
+      </script>
+  </table>
+
+
+</div>
+</section>
+
+

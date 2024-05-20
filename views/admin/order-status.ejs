@@ -1,0 +1,53 @@
+<%- include('../partials/admin-header') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status</title>
+    <!-- Add your CSS stylesheets or styles here -->
+</head>
+<body>
+    <h1>Order Status</h1>
+    
+    <!-- Display order details -->
+    <div class="order-details">
+        <h2>Order ID: <%= order._id %></h2>
+        <p><strong>Customer Name:</strong> <%= order.customer_id.name %></p>
+        <!-- Iterate over items -->
+<% order.items.forEach(item => { %>
+    <div class="product-item">
+        <p><strong>Product Name:</strong> <%= item.product_id.name %></p>
+        <!-- Add more details about the product if needed -->
+    </div>
+<% }) %>
+       
+        <p><strong>Address:</strong> <%= order.address %></p>
+        <p><strong>Payment Method:</strong> <%= order.payment_method %></p>
+        <p><strong>Status:</strong> <%= order.status %></p>
+        <p><strong>Created At:</strong> <%= order.createdAt %></p>
+    </div>
+
+    <!-- Form to update order status -->
+    <form action="/admin/update-orderstatus" method="POST">
+        <!-- Hidden input field to store the order ID -->
+        <input type="hidden" name="orderId" value="<%= order._id %>">
+
+        <!-- Select dropdown to choose the new status -->
+        <label for="status">Update Status:</label>
+        <select name="status" id="status">
+            <option value="Pending">Pending</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Confirmed">Confirmed</option>
+            <!-- Add more status options as needed -->
+        </select>
+
+        <!-- Submit button to update the status -->
+        <button type="submit">Update Status</button>
+    </form>
+    
+    <!-- Add your JavaScript scripts or scripts here -->
+</body>
+</html>
