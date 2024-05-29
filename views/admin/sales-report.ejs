@@ -167,7 +167,15 @@
                             });
                             pdf.addPage("a4", "landscape");
 
-                            pdf.text("HitWicket Sales Report",100,10);
+                            var currentFontSize = pdf.getFontSize();
+
+                            pdf.setFontSize(20);
+                            pdf.text("HitWicket Sales Report",300,30);
+
+
+                            pdf.setFontSize(currentFontSize);
+
+
 
                             pdf.table(
                                 50,
