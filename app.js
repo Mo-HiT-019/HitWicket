@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session=require('express-session')
-const expressLayouts = require('express-ejs-layouts');
+const expressLayouts = require('express-ejs-layouts'); 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://127.0.0.1:27017/hitwicket");
 const flash = require('express-flash');
@@ -13,6 +13,7 @@ const { MongoClient } = require('mongodb');
 const MongoStore = require('connect-mongo');
 require('dotenv').config();
 
+mongoose.connection.on('connected',()=>console.log("DB Connected"))
  
 var app = express();
 app.use(flash());
