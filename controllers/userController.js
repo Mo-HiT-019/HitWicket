@@ -135,7 +135,7 @@ const signup = async (req, res) => {
       service: 'gmail',
       auth: {
         user: 'ajith2001mohith2@gmail.com',
-        pass: 'mbmg hnnb dglk cwfu',
+        pass: process.env.GMAIL_PASS,
       },
       
     });
