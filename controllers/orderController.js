@@ -433,7 +433,7 @@ const get_invoice = async (req, res) => {
         doc.moveDown();
         const tableHeaders = ["No.", "Item", "Price", "Quantity"];
 
-        // Table data (using showOrder as an example, modify as needed)
+        
         const tableData = [
             {
                 no: "01",
@@ -441,7 +441,7 @@ const get_invoice = async (req, res) => {
                 price: showOrder.items.price,
                 quantity: showOrder.items.quantity,
             },
-            // Add more rows as needed
+            
         ];
 
         const startX = 50;
