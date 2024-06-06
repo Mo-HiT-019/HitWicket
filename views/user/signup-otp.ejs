@@ -1,4 +1,4 @@
-<%- include('../partials/user-header') %>
+<%- include('../partials/user-header2') %>
 
 
 <body>
@@ -39,9 +39,15 @@
 
 						</div>
 						<div class="text-white">Didn't recieve the otp?
-							<a href="/resend-otp" class="register-link">Resend OTP</a>
+                           
+							
 						</div>
 					</form>
+
+                    <form action="/resend-otp" method="post">
+                        <input type="hidden" name="email" value="<%= email %>">
+                        <button type="submit" class="register-link">Resend OTP</button>
+                    </form>
 				</div>
 			</div>
 
@@ -75,7 +81,7 @@
         const timer = setInterval(updateCountdown, 1000);
       </script>
 </body>
-
+<%- include('../partials/footer') %>
 <style>
 
 body {

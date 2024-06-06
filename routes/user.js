@@ -40,6 +40,8 @@ router.get('/match-otp', userController.renderMatchOTP);
 
 router.post('/match-otp', userController.matchOTP);
 
+router.post('/resend-otp',userController.resendOTP);
+
 router.get('/home',setCommonHeaders, userController.renderHome);
 
 router.get('/user/product-detail/:id',isLoggedIn,block,setCommonHeaders,userController.renderProductDetail);

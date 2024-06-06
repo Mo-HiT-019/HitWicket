@@ -5,6 +5,11 @@ const categoryController = {};
 categoryController.addCategory = async (req, res) => {
     try {
       const { name } = req.body;
+      const existingCategory= await Category.findOne({ name });
+      if(existingCategory){
+        req.flash('errorMessage','Category with this name exist');
+        return res.redirect('/admin/view-category');
+      }
       const newCategory = new Category({ name });
       await newCategory.save();
       

@@ -4,7 +4,7 @@ const sales_Report = async () => {
 
 
 
-    const sal = await Order.aggregate([
+    const sal = await Order.aggregate([  
         {
             $match: {
                 "items.status": "Delivered"

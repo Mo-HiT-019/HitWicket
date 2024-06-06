@@ -104,6 +104,34 @@ let otpStorage = {};
 
 const OTP_EXPIRATION_TIME = 2 * 60 * 1000;
 
+const generateAndSendOTP = async( name, email, number, password)=>{
+
+  const otp = Math.floor(100000 + Math.random() * 900000);
+    const otpExpiration = Date.now() + OTP_EXPIRATION_TIME;
+    console.log('Generated OTP:', otp);
+
+    otpStorage[email] = { otp, name, number, password, otpExpiration };
+    console.log('Stored OTP:', otpStorage[email]);
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'ajith2001mohith2@gmail.com',
+        pass: process.env.GMAIL_PASS,
+      },
+      
+    });
+    
+    
+    
+    await transporter.sendMail({
+      from: 'ajith2001mohith2@gmail.com',
+      to: email,
+      subject: 'Registration OTP',
+      text: `Your OTP for registration is ${otp}`,
+    });
+}
+
 const signup = async (req, res) => {
   try {
     const { name, email, number, password } = req.body;
@@ -124,31 +152,10 @@ const signup = async (req, res) => {
       return res.redirect('/signup');
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000);
-    const otpExpiration = Date.now() + OTP_EXPIRATION_TIME;
-    console.log('Generated OTP:', otp);
+    await generateAndSendOTP(name, email, number, password);
 
-    otpStorage[email] = { otp, name, number, password, otpExpiration };
-    console.log('Stored OTP:', otpStorage[email]);
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'ajith2001mohith2@gmail.com',
-        pass: process.env.GMAIL_PASS,
-      },
-      
-    });
     
-    console.log('sdfsdf')
-    
-    await transporter.sendMail({
-      from: 'ajith2001mohith2@gmail.com',
-      to: email,
-      subject: 'Registration OTP',
-      text: `Your OTP for registration is ${otp}`,
-    });
-   console.log('comeon')
+   
     res.redirect(`/match-otp?email=${encodeURIComponent(email)}`);
   } catch (error) {
     console.error('Error signing up:', error);
@@ -156,6 +163,35 @@ const signup = async (req, res) => {
     return res.render('user/signup');
   }
 };
+
+const resendOTP = async(req, res)=>{
+  const { email } = req.body;
+  console.log("OTP t1")
+  console.log(email);
+
+  try {
+    console.log("otp t2");
+    const otpDetails = otpStorage[email];
+    if (!otpDetails) {
+      console.log("otp t3");
+      req.flash('errorMessage', 'Invalid request');
+      return res.redirect('/signup');
+    }
+
+    console.log("otp t4");
+
+    await generateAndSendOTP(otpDetails.name, email, otpDetails.number, otpDetails.password);
+
+    req.flash('successMessage', 'OTP has been resent');
+    res.redirect(`/match-otp?email=${encodeURIComponent(email)}`);
+  } catch (error) {
+    console.log("otp t5");
+    console.error('Error resending OTP:', error);
+    req.flash('errorMessage', 'An unexpected error occurred');
+    res.redirect('/signup');
+  }
+};
+
 
 const renderMatchOTP = (req, res) => {
   const { email } = req.query;
@@ -358,7 +394,6 @@ const logout = async (req, res) => {
 };
 
 const sendOtpForPassword = async (req, res) => {
-  console.log('sdfdsf')
   const { email } = req.body;
 
   try {
@@ -372,7 +407,7 @@ const sendOtpForPassword = async (req, res) => {
       service: 'gmail',
       auth: {
         user: 'ajith2001mohith2@gmail.com',
-        pass: 'mbmg hnnb dglk cwfu',
+        pass: process.env.GMAIL_PASS,
       },
     });
 
@@ -401,7 +436,7 @@ await user.save();
         <p>OTP will expire at: ${otpExpirationTime.toLocaleString()}</p>
         <p>Please use this OTP within the next minute to complete your authentication.</p>
         <p>Thank you,</p>
-        <p>[Your Company/Organization Name]</p>`,
+        <p>[HitWicket]</p>`,
        
     };
 
@@ -863,7 +898,8 @@ module.exports={
   wallet,
   addToWishlist,
   renderWishlist,
-  removeFromWishlist
+  removeFromWishlist,
+  resendOTP
   
  
 }

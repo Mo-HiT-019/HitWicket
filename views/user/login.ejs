@@ -1,6 +1,6 @@
 
 
-<%- include('../partials/user-header') %>
+<%- include('../partials/user-header2') %>
 
 
 <body>
@@ -57,9 +57,6 @@
 				</div>
 			</div>
 
-			<div class="col-lg-6 col-md-6 d-none d-md-block image-container">
-                <img src="/public/images/app/cricket.jpg" alt="" style="height: 100%;">
-            </div>
 		</div>
 	</div>
 </body>
@@ -89,6 +86,24 @@
 <%- include('../partials/footer') %>
 
 <style>
+
+body {
+      /* Set the background image */
+      background-image: url('/public/images/app/cricket.jpg');
+      /* Set background image size */
+      background-size: cover; /* or contain, depending on your preference */
+      /* Set background image position */
+      background-position: center; /* or any other position you prefer */
+      /* Set background image attachment */
+      background-attachment: fixed; /* or scroll, depending on your preference */
+    }
+    
+	.image-container{
+    background: url('/public/images/app/cricket.jpg') center no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
 	
 
 .form-container{
@@ -210,6 +225,10 @@
 .form-box .btn-twitter:hover{
     background: #2eb7e5;
     color: #fff;
+}
+.image-conatiner{
+    padding: 0%;
+    
 }
 </style>
 
