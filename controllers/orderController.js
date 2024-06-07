@@ -15,7 +15,7 @@ const Return = require('../model/returnSchema');
 const renderUser_orders = async (req, res) => {
 
     let userId = req.session.user._id;
-    let user_id = new mongoose.Types.ObjectId(userId);
+    const+ user_id = new mongoose.Types.ObjectId(userId);
 
     let orderDetails = await Order.aggregate([
         {
@@ -58,7 +58,7 @@ const renderUser_orders = async (req, res) => {
 const renderOrders = async (req, res) => {
 
     let userId = req.session.user._id;
-    let user_id = new mongoose.Types.ObjectId(userId);
+    const user_id = new mongoose.Types.ObjectId(userId);
 
     let orderDetails = await Order.aggregate([
         {
@@ -102,7 +102,7 @@ const renderOrders = async (req, res) => {
 const renderOrder_details = async (req, res) => {
     try {
 
-        let order_id = new mongoose.Types.ObjectId(req.params.id);
+        const order_id = new mongoose.Types.ObjectId(req.params.id);
 
 
         let orderDetails = await Order.aggregate([
@@ -302,8 +302,8 @@ const cancelOrder = async (req, res) => {
 
 const get_invoice = async (req, res) => {
     try {
-        let product_id = new mongoose.Types.ObjectId(req.query.productId);
-        let order_id = new mongoose.Types.ObjectId(req.query.orderId);
+        const product_id = new mongoose.Types.ObjectId(req.query.productId);
+        const order_id = new mongoose.Types.ObjectId(req.query.orderId);
         let order = await Order.aggregate([
             {
                 $match: {
@@ -482,10 +482,10 @@ const get_invoice = async (req, res) => {
 
 
 const return_order = async (req, res) => {
-    let orderId = req.query.order_id;
-    let product_id = req.query.product_id;
-    let user_id = req.session.user._id;
-    let returnDetails = {
+    const orderId = req.query.order_id;
+    const product_id = req.query.product_id;
+    const user_id = req.session.user._id;
+    const returnDetails = {
         order_id: orderId,
         product_id: product_id,
         user_id: user_id

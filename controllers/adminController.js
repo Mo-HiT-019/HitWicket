@@ -120,7 +120,7 @@ const renderUserDashboard = async (req, res) => {
 
 const renderDashboard = async (req, res) => {
   try {
-      // Calculate order statistics (total orders, total revenue, etc.)
+     
       const totalOrders = await Order.countDocuments();
       const totalRevenue = await Order.aggregate([
           {
@@ -131,7 +131,7 @@ const renderDashboard = async (req, res) => {
           }
       ]);
 
-      // Render the admin dashboard page with order statistics
+      
       res.render('admin/dashboard', {
           totalOrders,
           totalRevenue: totalRevenue.length > 0 ? totalRevenue[0].totalAmount : 0
@@ -232,17 +232,17 @@ const getUsers = async (req, res) => {
 const userOrderPage = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const page = parseInt(req.query.page) || 1; // Get the page number from the query parameters
-    const PAGE_SIZE = 10; // Define the number of items per page
+    const page = parseInt(req.query.page) || 1;
+    const PAGE_SIZE = 10; 
 
-    // Fetch orders related to the userId with pagination
+  
     const totalOrders = await Order.countDocuments({ customer_id: userId });
     const totalPages = Math.ceil(totalOrders / PAGE_SIZE);
     const orderDetails = await Order.find({ customer_id: userId })
       .skip((page - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE);
 
-    // Render the order details page with pagination data
+   
     res.render('admin/orderDetails', { orderDetails, userId,PAGE_SIZE, currentPage: page, totalPages });
   } catch (error) {
     console.error(error);
@@ -481,10 +481,10 @@ const userOrders = async (req, res) => {
 const renderOrderStatusPage = async (req, res) => {
   console.log("Test 1")
   try {
-    // Retrieve the orderId from the query parameters
+    
     const orderId = req.query.orderId;
 
-    // Retrieve the order details based on the orderId
+    
     const order = await Order.findById(orderId)
       .populate('customer_id', 'name')
       .populate({
@@ -492,15 +492,15 @@ const renderOrderStatusPage = async (req, res) => {
         select: 'name'
       })
 
-    // If the order is found, render the order status page
+    
     if (order) {
       res.render('admin/order-status', { order });
     } else {
-      // If the order is not found, render an error page or redirect to a relevant page
+     
       res.render('error_page', { error: 'Order not found' });
     }
   } catch (error) {
-    // Handle any errors that occur during the process
+    
     console.error('Error retrieving order details:', error);
     res.render('error_page', { error: 'Internal Server Error' });
   }
@@ -509,16 +509,16 @@ const renderOrderStatusPage = async (req, res) => {
 
 const updateOrderStatus = async (req, res) => {
   try {
-    // Retrieve the orderId and new status from the request body
+   
     const { orderId, status } = req.body;
 
-    // Update the order status based on the orderId
+   
     const updatedOrder = await Order.findByIdAndUpdate(orderId, { status: status }, { new: true });
 
-    // Redirect to the order status page after updating the status
+   
     res.redirect(`/admin/orders`);
   } catch (error) {
-    // Handle any errors that occur during the process
+    
     console.error('Error updating order status:', error);
     res.render('error_page', { error: 'Internal Server Error' });
   }
@@ -526,7 +526,7 @@ const updateOrderStatus = async (req, res) => {
 
 const getOrderStats = async (req, res) => {
   try {
-      // Calculate order statistics (total orders, total revenue, etc.)
+     
       const totalOrders = await Order.countDocuments();
       const totalRevenue = await Order.aggregate([
           {
@@ -551,7 +551,7 @@ const getOrderStats = async (req, res) => {
 const render_change_order_status = async (req, res) => {
   
   
-  // Use the mongoose.Types.ObjectId directly
+ 
   let product_id = new mongoose.Types.ObjectId(req.query.productId);
   let order_id = new mongoose.Types.ObjectId(req.query.orderId);
   let order = await Order.aggregate([
