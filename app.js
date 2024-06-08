@@ -5,12 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session=require('express-session')
 const expressLayouts = require('express-ejs-layouts');
+require('dotenv').config();
 const mongoose = require("mongoose");
 const flash = require('express-flash');
-const sharp = require('sharp');
-const { MongoClient } = require('mongodb');
-const MongoStore = require('connect-mongo');
-require('dotenv').config();
 
 const dbURI=process.env.MONGODB_URI;
 
