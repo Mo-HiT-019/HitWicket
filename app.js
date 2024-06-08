@@ -18,7 +18,7 @@ mongoose.connection.on('connected',()=>console.log("DB Connected"))
 var app = express();
 app.use(flash());
 
-
+const PORT=process.env.PORT||3000;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,7 +76,7 @@ app.use('/coupen',coupenRouter);
 app.use('/sales',salesRouter);
 
 
-
+ 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -88,9 +88,12 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message; 
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
-  res.status(err.status || 500);
+  res.status(err.status || 500); 
   res.render('error');
 });
 
+app.listen(PORT,()=>{
+  console.log(`Server started at ${PORT}`);
+})
 module.exports = app;
  
