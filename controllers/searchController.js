@@ -140,7 +140,7 @@ if (query) {
   
 
     
-    const categories = await Category.find();
+    const categories = await Category.find({isDeleted:false});
     console.log('car',categories)
 
     const isHomePage=false

@@ -48,28 +48,26 @@ const renderLogin = async (req, res) => {
 
 
 const login = async (req, res) => {
-  console.log("CHeck 1");
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    console.log("CHeck 2 ");
+  
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      console.log("CHeck 3");
+
       if (user.blocked) {
         console.log(user);
         req.flash('errorMessage', 'Sorry, your account has been blocked');
         return res.redirect('/');
       } else {
-        console.log("CHeck 3");
-        // Set session user
+
+  
         req.session.user = user;
         console.log('req.session',req.session)
         console.log('Session user set:', req.session.user);
         console.log('User logged in. Session ID:', req.sessionID);
         
-        // Redirect to home
         return res.redirect('/home');
       }
     } else if (!user) {
@@ -277,14 +275,14 @@ const renderHome = async (req, res) => {
       const page = req.query.page || 1; 
 
 
-      const totalProducts = await Product.countDocuments();
+      const totalProducts = await Product.countDocuments({deleted:false});
       const totalPages = Math.ceil(totalProducts / PAGE_SIZE);
 
-      const products = await Product.find()
+      const products = await Product.find({deleted:false})
         .skip((page - 1) * PAGE_SIZE) 
         .limit(PAGE_SIZE); 
 
-      const categories = await Category.find();
+      const categories = await Category.find({isDeleted:false});
       const isHomePage=true
 
       res.render('user/home', {
@@ -800,7 +798,6 @@ const removeFromWishlist = async (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
 
-    // Find the user by ID
     const user = await User.findById(userId);
 
     if (!user) {
@@ -808,7 +805,6 @@ const removeFromWishlist = async (req, res) => {
       return res.redirect('/error');
     }
 
-    // Check if the product is in the wishlist
     const productIndex = user.wishlist.findIndex(item => item.equals(productId));
 
     if (productIndex === -1) {
@@ -816,13 +812,11 @@ const removeFromWishlist = async (req, res) => {
       return res.redirect('/wishlist');
     }
 
-    // Remove the product from the wishlist
     user.wishlist.splice(productIndex, 1);
 
-    // Save the updated user object
     await user.save();
 
-    // Redirect the user to the wishlist page
+  
     req.flash('success', 'Product removed from wishlist successfully');
     res.redirect('/wishlist');
   } catch (error) {
@@ -844,14 +838,14 @@ const renderWishlist=async (req, res) => {
       if (usr.blocked === true) {
         console.log('welcome');
         req.flash('errorMessage', `Sorry ${use.name},Your account has been blocked`);
-        return res.redirect('/'); // Add return here to end the function
+        return res.redirect('/'); 
       }
     }
 
     const userId = req.session.user;
    const user = await User.findById(userId).populate('wishlist');
 
-    // Render wishlist page and pass user's wishlist data
+   
     res.render('user/wishlist', { user });
   } catch (error) {
     console.error(error);

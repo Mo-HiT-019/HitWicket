@@ -115,10 +115,10 @@ const addProduct = async (req, res) => {
       const page = parseInt(req.query.page) || 1;
   
       // Calculate total count without skipping and limiting
-      const totalCount = await Product.countDocuments();
+      const totalCount = await Product.countDocuments({deleted:false});
       const totalPages = Math.ceil(totalCount / PAGE_SIZE);
       
-      const products = await Product.find().populate('category')
+      const products = await Product.find({deleted:false}).populate('category')
         .skip((page - 1) * PAGE_SIZE)
         .limit(PAGE_SIZE);
   
@@ -155,8 +155,7 @@ const addProduct = async (req, res) => {
       const productId = req.params.productId;
       const { name, price, description, category, stock } = req.body;
       const newImages = req.files.map(file => file.filename);
-  
-      // Use populate to get the category details
+
       const product = await Product.findById(productId).populate('category', 'name');
   
       if (!product) {
@@ -179,14 +178,12 @@ const addProduct = async (req, res) => {
       const updatedImages = existingImages.filter(image => !req.body[`removeImage_${image}`]);
   
       updatedImages.push(...newImages);
-  
-      // Update product details
+
       product.name = name;
       product.price = price;
       product.description = description;
       product.stock = stock;
-  
-      // Check if category is provided and not 'undefined'
+
       if (category !== undefined) {
         
         product.category = category;
@@ -207,7 +204,7 @@ const addProduct = async (req, res) => {
     const productId = req.params.productId;
   
     try {
-      const deletedProduct = await Product.findByIdAndDelete(productId);
+      const deletedProduct = await Product.findByIdAndUpdate(productId,{deleted:true});
       if (!deletedProduct) {
         return res.send({ message: 'Product not found' });
       }
@@ -225,10 +222,10 @@ const addProduct = async (req, res) => {
   
       
       const products = selectedCategory
-        ? await Product.find({ 'category': selectedCategory }).populate('category','name')
-        : await Product.find().populate('category');
+        ? await Product.find({ 'category': selectedCategory,deleted:false }).populate('category','name')
+        : await Product.find({deleted:false}).populate('category');
   
-      const categories = await Category.find();
+      const categories = await Category.find({isDeleted:false});
   
       res.render('user/category-product', { products, categories, selectedCategory });
     } catch (error) {
