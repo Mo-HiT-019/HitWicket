@@ -7,14 +7,14 @@ const ObjectId = Schema.ObjectId;
 const returnRequestSchema = new Schema({
     order_id: {
         type: ObjectId,
-        ref: 'orders'
+        ref: 'Order'
     },
     product_id: {
         type: ObjectId,
     },
     user_id: {
         type: ObjectId,
-        ref: 'users'
+        ref: 'User'
     },
     reason: {
         type: String,

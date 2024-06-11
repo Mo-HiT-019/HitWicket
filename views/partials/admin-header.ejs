@@ -33,27 +33,58 @@
           <li class="nav-item active">
             <a class="nav-link" style="color: white;" href="/admin">Admin Dashboard <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: white;" href="/admin/view-products">All Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: white;" href="/admin/view-users">All Users</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: white;" href="/admin/view-category">All Categories</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Products
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/admin/view-products">All Products</a>
+              <a class="dropdown-item" href="/sales/sales">Product Sales</a>
+            </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              More
+              Users
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/admin/view-users">All Users</a>
+              <a class="dropdown-item" href="/admin/order-user">User Order</a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Orders
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/admin/order-user">User Orders</a>
+              <a class="dropdown-item" href="/admin/return">Return requests</a>
+            </div>
+          </li>
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Coupens
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/coupen">Manage Coupens</a>
               <a class="dropdown-item" href="/coupen/new-coupen">New Coupen</a>
-              <a class="dropdown-item" href="/sales/sales">Sales</a>
-              <a class="dropdown-item" href="/admin/return">Return requests</a>
+            </div>
+          </li>
 
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Category
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/admin/view-category">Manage Category</a>
             </div>
           </li>
         </ul>
