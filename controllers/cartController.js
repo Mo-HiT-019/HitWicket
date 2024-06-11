@@ -558,16 +558,16 @@ const createRazOrder = (orderId, total) => {
         }
     }
      else {
-        console.log("Razorpay test 1");
+        
         const createOrder = await Order.create(order);
         let total = parseInt(req.body.price);
         let orderId = createOrder._id;
   
         let user = await User.findById(req.session.user._id);
-        console.log("Razorpay test 2");
+        
         
         const Razorder = await createRazOrder(orderId, total).then((order) => order);
-        console.log("Razorpay test 3");
+        
         const timestamp = Razorder.created_at;
         const date = new Date(timestamp * 1000); 
   
@@ -584,17 +584,17 @@ const createRazOrder = (orderId, total) => {
           created_at: formattedDate,
         });
   
-        console.log("Razorpay test 6");
+        
         await payment.save();
 
-        console.log("Razorpay test 7");
+        
   
         res.json({
           status: true,
           order: Razorder,
           user
         });
-        console.log("Razorpay test 8");
+       
       }
     } catch (err) {
       res.send(err.message);

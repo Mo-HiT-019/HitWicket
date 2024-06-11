@@ -326,7 +326,7 @@
                                         Cash On Delivery
                                     </label>
                                 </div>
-
+                                <% if (totalAmount <= userData.user_wallet){ %>
                                 <div class="form-check">
                                     <input class="form-check-input" value="wallet" type="radio" name="payment_method"
                                         id="" checked>
@@ -334,6 +334,14 @@
                                         My Wallet
                                     </label>
                                 </div>
+                                <% }else{ %>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="paymentWallet" disabled>
+                                    <label id="walletBalance" class="form-check-label text-muted" for="paymentWallet">
+                                        My Wallet (Insufficient Balance)
+                                    </label>
+                                </div>
+                                <% } %>
 
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" value="Online Payment" type="radio"
