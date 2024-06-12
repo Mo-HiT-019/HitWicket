@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
-//coupen schema
 const couponSchema = new Schema(
     {
         coupon_code: {

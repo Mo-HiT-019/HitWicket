@@ -45,7 +45,6 @@ const editCoupen = async (req, res) => {
   let coupon = await Coupen.findById(req.params.id);
   coupon = coupon.toObject();
 
-  //formatting the dates
   function formatDateToDDMMYYYY(dateString) {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");

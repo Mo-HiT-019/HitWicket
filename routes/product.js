@@ -12,8 +12,6 @@ const {isLoggedInAdmin,isLoggedOut} = require('../middleware/adminauth');
 
 
 
-// Product Routes
-// Add Product
 router.get('/add-product',productController.renderAddProduct);
 
 router.post('/add-product',productController.upload.array('images', 5), productController.addProduct);
