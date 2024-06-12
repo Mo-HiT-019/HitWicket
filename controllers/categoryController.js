@@ -23,10 +23,10 @@ categoryController.addCategory = async (req, res) => {
 categoryController.renderviewCategory = async (req, res) => {
   const PAGE_SIZE = 8;
   const page = req.query.page || 1;
-  const totalCategory = await Category.countDocuments({isDeleted:false});
+  const totalCategory = await Category.countDocuments({ isDeleted: false });
   const totalPages = Math.ceil(totalCategory / PAGE_SIZE);
 
-  const categories = await Category.find({isDeleted:false})
+  const categories = await Category.find({ isDeleted: false })
     .skip((page - 1) * PAGE_SIZE)
     .limit(PAGE_SIZE);
 
@@ -77,7 +77,7 @@ categoryController.updateCategory = async (req, res) => {
 categoryController.renderdeleteCategory = async (req, res) => {
   try {
     const id = req.params.id;
-    const category = await Category.findByIdAndUpdate(id,{isDeleted:true});
+    const category = await Category.findByIdAndUpdate(id, { isDeleted: true });
 
     if (!category) {
       return res.send("Category not found");

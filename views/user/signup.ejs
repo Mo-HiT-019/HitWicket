@@ -1,9 +1,19 @@
 
 
-<%- include('../partials/user-header') %>
+<%- include('../partials/user-header2') %>
 
 
 <body>
+
+    <div class="login-box">
+        <% if (msg.length > 0) { %>
+          <% console.log(msg) %>
+          <div class="alert alert-danger" id="errorMessage">
+            <%= msg %>
+          </div>
+          <% } %>
+        </div>
+
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-6 col-md-6 form-container">

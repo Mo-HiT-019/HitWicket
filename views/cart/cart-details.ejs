@@ -185,13 +185,13 @@
                                 const priceElement = document.getElementById(`price_${productId}`);
 
                                 if (cartItem && priceElement) {
-                                  // Update the displayed quantity
+                                  
                                   const quantityElement = document.getElementById(productId);
                                   if (quantityElement) {
                                     quantityElement.value = quantity;
                                   }
 
-                                  // Update the displayed price
+                                 
                                   priceElement.innerText = '€ ' + (cartItem.productId.price * quantity).toFixed(2);
                                 }
                               }

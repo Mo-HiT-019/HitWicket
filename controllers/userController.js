@@ -164,19 +164,15 @@ const signup = async (req, res) => {
 
 const resendOTP = async(req, res)=>{
   const { email } = req.body;
-  console.log("OTP t1")
   console.log(email);
 
   try {
-    console.log("otp t2");
     const otpDetails = otpStorage[email];
     if (!otpDetails) {
-      console.log("otp t3");
       req.flash('errorMessage', 'Invalid request');
       return res.redirect('/signup');
     }
 
-    console.log("otp t4");
 
     await generateAndSendOTP(otpDetails.name, email, otpDetails.number, otpDetails.password);
 
@@ -352,7 +348,7 @@ const renderProductDetail = async (req, res) => {
       }
       const isHomePage = false
 
-      // Include offerStartDate and offerEndDate in the rendering context
+    
       return res.render('user/product-detail', {
         isHomePage,
         user,
@@ -482,11 +478,11 @@ const verifyPasswordOTP = async (req, res) => {
       return res.send({ error: 'User not found' });
     }
 
-    // Check if the OTP has expired
+  
     const currentTime = new Date();
     if (user.otp.expirationTime && currentTime > user.otp.expirationTime) {
       console.log('OTP has expired');
-      // Clear the expired OTP
+    
       user.otp = {
         code: null,
         expirationTime: null,
@@ -503,7 +499,7 @@ const verifyPasswordOTP = async (req, res) => {
     }
 
     user.isVerified = true;
-    // Clear the OTP after successful verification
+    
     user.otp = {
       code: null,
       expirationTime: null,
@@ -588,7 +584,7 @@ const renderUserProfile = async (req, res) => {
     }
     const isHomePage = false
 
-    res.render('user/user-profile', { user: user,addresses:addresses,msg:req.flash('errorMessage'),isHomePage  }); // Pass 'user' to the template
+    res.render('user/user-profile', { user: user,addresses:addresses,msg:req.flash('errorMessage'),isHomePage  }); 
   } catch (error) {
     console.log(error);
     res.redirect('/error')
@@ -604,7 +600,7 @@ const renderAddress = async (req, res) => {
     res.render('user/my-address', {
       isHomePage,
       addresses,
-      userData: userData, // Assuming userData is a Mongoose document
+      userData: userData, 
     });
   } catch (error) {
     res.redirect('/error');
@@ -629,12 +625,11 @@ const add_newAddress = async (req, res) => {
     address_type,
   } = req.body;
   try {
-    // Check if required fields are present
     if (!address_cust_name || !customer_id) {
       throw new Error('address_cust_name and customer_id are required fields');
     }
 
-    // Create the address using the correct field names
+
     await Address.create({
       address_user_name: address_cust_name,
       user_id: customer_id,
@@ -690,7 +685,7 @@ const updateUser = async (req, res) => {
     user.number = req.body.number;
     const newPassword = req.body.password;
     if (newPassword) {
-      // Hash the new password before saving it
+
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
       user.password = hashedPassword;
@@ -698,7 +693,7 @@ const updateUser = async (req, res) => {
 
     await user.save();
 
-    res.redirect('/user-profile'); // Redirect to the user profile page or wherever you want to redirect after the update
+    res.redirect('/user-profile');
   } catch (error) {
     res.redirect('/error');
   }
@@ -744,7 +739,6 @@ const delete_address = async (req, res) => {
 const addToWishlist = async (req, res) => {
   try {
 
-    console.log("Check 1");
 
     const userId = req.params.userId;
     const user = await User.findById(userId);
@@ -752,24 +746,22 @@ const addToWishlist = async (req, res) => {
     const productId = req.params.productId;
     
 
-    console.log("Check 3");
     if (!user) {
-      console.log("Check 3 user error");
       req.flash('error', 'User not found');
       return res.redirect('/error');
     }
 
-    // Find the product by ID
+  
     const product = await Product.findById(productId);
     if (!product) {
-      console.log("Check 3 product error");
+
       req.flash('error', 'Product not found');
       return res.redirect('/error');
     }
 
     console.log("Check 1");
 
-    // Check if the product is already in the wishlist
+
     const isProductInWishlist = user.wishlist.includes(productId);
     if (isProductInWishlist) {
       req.flash('errorMessage', 'Product already in wishlist');
@@ -777,13 +769,13 @@ const addToWishlist = async (req, res) => {
     }
      
     console.log("Check 2");
-    // Add the product to the wishlist
+
     user.wishlist.push(productId);
 
-    // Save the updated user object
+  
     await user.save();
 
-    // Redirect the user to the wishlist page
+  
     req.flash('success', 'Product added to wishlist successfully');
     res.redirect('/wishlist');
   } catch (error) {
