@@ -398,11 +398,12 @@ decrementValue = async (productID) => {
                         </h5>
 
                       </div>
-
+                     <%if(cart.length>0){ %>
                       <a href="/cart/checkout" type="button"
                         class="btn user-btn btn-lg btn-block rounded-pill btn-success">
                         <i class="fas fa-shopping-cart me-2"></i> Go to Checkout
                       </a>
+                      <% }%>
 
 
 
