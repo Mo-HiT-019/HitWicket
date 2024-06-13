@@ -325,35 +325,39 @@
                     <% } %>
                       <div class="d-flex justify-content-around mb-1">
                         <div style="width: 10rem;">
-                          <p class="text-muted mt-1 mb-0 small ms-xl-5">
+                          <p class="mt-1 mb-0 small ms-xl-5" style="color: black;">
+                            Ordered:
                             <%= toDateAndTime(order.createdAt) %>
                           </p>
                         </div>
                         <div style="width: 10rem;">
                           <% if (order.items.shipped) { %>
-                            <p class="text-muted mt-1 mb-0 small ms-xl-5">
+                            <p class=" mt-1 mb-0 small ms-xl-5" style="color: black;" >
+                              Shipped:
                               <%= toDateAndTime(order.items.shipped_on) %>
                             </p>
                             <% } %>
                         </div>
                         <div style="width: 10rem;">
                           <% if (order.items.outdelivery) { %>
-                            <p class="text-muted mt-1 mb-0 small ms-xl-5">
+                            <p class=" mt-1 mb-0 small ms-xl-5" style="color: black;">
+                              Out for delivery:
                               <%= toDateAndTime(order.items.out_for_delivery) %>
                             </p>
                             <% } %>
                         </div>
                         <div style="width: 10rem;">
                           <% if (order.items.delivered) { %>
-                            <p class="text-muted mt-1 mb-0 small ms-xl-5">
-                              <%= toDateAndTime(order.items.delivered_on) %> 
+                           
+                            <p class=" mt-1 mb-0 small ms-xl-5" style="color: black;">
+                               Delivered On:
+                              <%= toDateAndTime(order.items.delivered_on) %>
                             </p>
                             <% } %>
                         </div>
                       </div>
                       <div class="progress" style="height: 6px; border-radius: 16px;">
                         <div class="progress-bar" role="progressbar"
-                          style="width: <%= order.items.track %>%; border-radius: 16px; <%= order.items.cancelled_on ? 'background-color: black;' : 'background-color:black;' %>"
                           aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
                         </div>
                         <div class="d-flex justify-content-around mb-1">
