@@ -89,10 +89,10 @@
                     <p role="button" onclick="sorting('sort=new-first')" class="h6 mt-1">New First</p>
                 </div>
                 <div>
-                    <!-- Button for sorting A-Z -->
+                
                     <p role="button" onclick="sorting('sort=a-z')" class="h6 mt-1">A-Z</p>
                     
-                    <!-- Button for sorting Z-A -->
+                
                     <p role="button" onclick="sorting('sort=z-a')" class="h6 mt-1">Z-A</p>
                 </div>
             </div>
@@ -106,7 +106,6 @@
                             <h4 class="card-title"><%= product.name %></h4>
                             <h6 style="font-size: 0.8rem;" class="card-subtitle mb-2 text-muted">Category: <%= product.category.name %> &#160;
                                 &#160; &#160; &#160;
-                                <!-- Brand: <%= product.brand_name %> -->
                             </h6>
                             <div class="price text-success">
                                 <h5 class="mt-4">₹<%= product.price %></h5>
@@ -142,7 +141,7 @@ $('.Showcolor').on('click', () => {
     $('.color').slideToggle();
 })
 
-//assigning initial filtered catgories
+
 let urlString = window.location.href;
 const url = new URL(urlString);
 const queryParameters = url.searchParams;
@@ -168,7 +167,7 @@ if (params.length === 0) {
     $('.color').show();
 }
 
-// filtering by category
+
 $('.filter-button').on('click', (e) => {
     let link = window.location.href;
     link = decodeURIComponent(link);
@@ -185,7 +184,7 @@ $('.filter-button').on('click', (e) => {
     location.assign(link)
 })
 
-// filtering by brand
+
 $('.filter-brand').on('click', (e) => {
     let link = window.location.href;
     link = decodeURIComponent(link);
