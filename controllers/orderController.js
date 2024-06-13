@@ -201,7 +201,7 @@ const renderOrder_details = async (req, res) => {
       }
     }
 
-    res.render("user/orderdetails", { orderDetails, isHomePage });
+    res.render("user/orderDetails", { orderDetails, isHomePage });
   } catch (error) {
     console.error("Error fetching order details:", error);
     res.redirect("/error");
